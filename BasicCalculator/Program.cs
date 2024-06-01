@@ -13,7 +13,7 @@ namespace BasicCalculator
             
             while (repeat)
             {
-                Console.WriteLine("___________-_BASIC CALCULATOR_-___________\n");
+                Console.WriteLine("-___________-_BASIC CALCULATOR_-___________-\n");
                 Console.WriteLine("1. penjumlahan       : +");
                 Console.WriteLine("2. pengurangan       : -");
                 Console.WriteLine("3. perkalian         : *");
