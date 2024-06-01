@@ -1,63 +1,106 @@
 ﻿using System;
+using System.Security.Authentication;
 
 namespace BasicCalculator
 {
-    class Program
+    internal class Program
     {
         static void Main(string[] args)
         {
-            Console.Write("masukan angka pertama: ");
-            double num1 = Convert.ToDouble(Console.ReadLine());
-
-            Console.Write("masukan angka kedua: ");
-            double num2 = Convert.ToDouble(Console.ReadLine());
-
-            Console.Write("masukan operator (+, -, *, /, %): ");
-            char op = Console.ReadKey().KeyChar;
-            Console.ReadLine(); //perlu klik enter sebelum program di eksekusi
-
-            double result = 0;
-
-            switch (op)
+            string[] validChoices = { "+", "-", "*", "/", "%", "clear", "exit" };
+            string choose;
+            bool repeat = true;
+            
+            while (repeat)
             {
-                case '+':
-                    result = num1 + num2;
-                    break;
-                case '-':
-                    result = num1 - num2;
-                    break;
-                case '*':
-                    result = num1 * num2;
-                    break;
-                case '/':
-                    if (num2 != 0)
-                    {
-                        result = num1 / num2;
-                    }
-                    else
-                    {
-                        Console.WriteLine("\nzero is invalid division!");
-                        return;
-                    }
-                    break;
-                case '%':
-                    if (num2 != 0)
-                    {
-                        result = num1 % num2;
-                    }
-                    else
-                    {
-                        Console.WriteLine("\nzero is invalid mod!");
-                        return;
-                    }
-                    break;
+                Console.WriteLine("____________BASIC CALCULATOR____________\n");
+                Console.WriteLine("1. penjumlahan       : +");
+                Console.WriteLine("2. pengurangan       : -");
+                Console.WriteLine("3. perkalian         : *");
+                Console.WriteLine("4. pembagian         : /");
+                Console.WriteLine("5. modulus           : %");
+                Console.WriteLine("6. bersihkan         : clear");
+                Console.WriteLine("7. keluar            : exit");
 
-                default:
-                    Console.WriteLine("\nunvalid operator");
-                    return;
+                Console.Write("\nChoose beetwen (+, -, *, /, %, clear, exit ) : ");
+                choose = Console.ReadLine();
+
+                if (Array.Exists(validChoices, s => s == choose))
+                {
+                    switch (choose)
+                    {
+                        case "clear":
+                            Console.Clear();
+                            break;
+
+                        case "exit":
+                            repeat = false;
+                            break;
+
+                        default:
+
+                            if (choose != "clear" && choose != "exit")
+                            {
+                                Console.Write("\nMasukan angka pertama: ");
+                                double num1 = Convert.ToDouble(Console.ReadLine());
+
+                                Console.Write("Masukan angka kedua: ");
+                                double num2 = Convert.ToDouble(Console.ReadLine());
+
+                                double result = 0;
+
+                                bool showError = false;
+
+                                switch (choose)
+                                {
+                                    case "+":
+                                        result = num1 + num2;
+                                        break;
+                                    case "-":
+                                        result = num1 - num2;
+                                        break;
+                                    case "*":
+                                        result = num1 * num2;
+                                        break;
+                                    case "/":
+                                        if (num2 != 0)
+                                        {
+                                            result = num1 / num2;
+                                        }
+                                        else
+                                        {
+                                            showError = true;
+                                        }
+                                        break;
+
+                                    case "%":
+                                        if (num2 != 0)
+                                        {
+                                            result = num1 % num2;
+                                        }
+                                        else
+                                        {
+                                            showError = true;
+                                        }
+                                        break;
+                                }
+                                if (showError)
+                                {
+                                    Console.WriteLine("\n untuk pembagi atau modulus angka kedua sebaiknya tidak berisikan 0!\n");
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"\nHasil : {num1} {choose} {num2} = {result}\n");
+                                }
+                            }
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\ninvalid choice! try again\n");
+                }
             }
-
-            Console.WriteLine($"\nResult = {num1} {op} {num2} = {result}");
         }
     }
 }
